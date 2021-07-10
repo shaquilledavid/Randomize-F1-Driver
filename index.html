@@ -12,10 +12,10 @@
         
         <img v-bind:class="gender" v-bind:src="picture" />
         <!-- notes: use v-bind for vue stuff, class gender refers to the stylesheet where it checks gender of user and outlines the picture blue for male, pink for female-->
-        <h1>{{firstName}} {{lastName}}, #{{number}}</h1>
+        <h1 href={{url}} >{{firstName}} {{lastName}}, #{{number}}</h1>
         <h3> {{team}}</h3>
         <button v-on:click="getUser()"
-        :class="gender"> Get Random Driver </button>
+        :class="gender"> Randomize Driver </button>
     </div>
     <script src="https://unpkg.com/vue@3.0.5"></script>
     <script src="app.js"></script>

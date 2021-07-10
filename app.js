@@ -6,11 +6,11 @@ const app = Vue.createApp({
         return {
             firstName: 'Shaquille',
             lastName: 'David',
-            team: 'Univeristy of Toronto Mississauga Eagles',
+            team: 'University of Toronto Mississauga Eagles',
             number: '15',
             gender: 'male',
             picture: 'assets/me.jpg',
-            year: '2021',
+            url: 'https://www.ocaa.com/sports/mbkb/2019-20/players/shaquilledavidq1tj',
         }
     },
 
@@ -75,7 +75,7 @@ const app = Vue.createApp({
             const drivers = await fetch("http://ergast.com/api/f1/2021/drivers.json", requestOptions)
             .then(function(response) { return response.json(); })
             .then(function(json) {
-                console.log(json.MRData.DriverTable.Drivers)
+                //console.log(json.MRData.DriverTable.Drivers)
                 f1 = json.MRData.DriverTable.Drivers
             });
             
@@ -89,10 +89,8 @@ const app = Vue.createApp({
             this.lastName = driver.familyName;
             this.number = driver.permanentNumber;
             this.team = this.getDriverTeam(driver);
-            this.picture = 'assets/{0}.jpg'.format(driver.driverId);
+            this.picture = `assets/${driver.driverId}.jpg`; //https://www.codegrepper.com/code-examples/javascript/javascript+string+formatting
 
-            //this.gender = results[0].gender,
-            //this.picture = results[0].picture.large
         }, 
     },
 
