@@ -4,32 +4,91 @@ const app = Vue.createApp({
 
     data(){ //data is a function/method that returns an object
         return {
-            firstName: 'John',
-            lastName: 'Cena',
-            email: 'lewishamilton@hotmail.com',
+            firstName: 'Lewis',
+            lastName: 'Hamilton',
+            team: 'Mercedes AMG Petronas',
+            number: '44',
             gender: 'male',
             picture: 'https://randomuser.me/api/portraits/men/10.jpg',
+            year: '2021',
         }
     },
 
+    
     //define all our methods in here
     methods: {
-        async getUser(){
-            //we want to get a random user everytime. we need to use fetch API with async await.
-            const res = await fetch('https://randomuser.me/api')
-            const { results } = await res.json()
-            //console.log(results);
 
+        pickRandomDriver(obj) {
+            //generate a random driver. noted from https://stackoverflow.com/questions/2532218/pick-random-property-from-a-javascript-object
+            var result;
+            var count = 0;
+            for (var prop in obj)
+                if (Math.random() < 1/++count)
+                   result = prop;
+            return obj[result];
+        },
 
-
+        getDriverTeam(driver){
+            // a function to distinguish which team the driver is part of, this information is not in the API response
+            if (driver.driverId == "alonso" || driver.driverId == "ocon")
+                return "Alpine F1 Team"
             
-            // we need this. to change the attributes
+            if (driver.driverId == "bottas" || driver.driverId == "hamilton")
+                return "Mercedes AMG Petronas"
+            
+            if (driver.driverId == "gasly" || driver.driverId == "tsunoda")
+                return "Alpha Tauri F1 Team"
+            
+            if (driver.driverId == "giovinazzi" || driver.driverId == "raikkonen")
+                return "Alfa Romeo F1 Team"
+            
+            if (driver.driverId == "latifi" || driver.driverId == "russell")
+                return "Williams F1 Team"
+            
+            if (driver.driverId == "leclerc" || driver.driverId == "sainz")
+                return "Ferrari F1 Team"
+            
+            if (driver.driverId == "mazepin" || driver.driverId == "mick_schumacher")
+                return "HAAS F1 Team"
+            
+            if (driver.driverId == "norris" || driver.driverId == "ricciardo")
+                return "McLaren F1 Team"
 
-            this.firstName = results[0].name.first,
-            this.lastName = results[0].name.last,
-            this.email = results[0].email,
-            this.gender = results[0].gender,
-            this.picture = results[0].picture.large
+            if (driver.driverId == "perez" || driver.driverId == "max_verstappen")
+                return "Red Bull Racing"
+            
+            if (driver.driverId == "stroll" || driver.driverId == "vettel")
+                return "Aston Martin Cognizant F1 Team"
+        },
+
+        async getUser(){
+
+            // Using the API: https://documenter.getpostman.com/view/11586746/SztEa7bL
+
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+              };
+
+            var f1;
+
+            const drivers = await fetch("http://ergast.com/api/f1/2021/drivers.json", requestOptions)
+            .then(function(response) { return response.json(); })
+            .then(function(json) {
+                console.log(json.MRData.DriverTable.Drivers)
+                f1 = json.MRData.DriverTable.Drivers
+            });
+            
+            //pick a random driver on click
+            driver = this.pickRandomDriver(f1);
+            
+            //update the driver
+            this.firstName = driver.givenName;
+            this.lastName = driver.familyName;
+            this.number = driver.permanentNumber;
+            this.team = this.getDriverTeam(driver);
+            //this.gender = results[0].gender,
+            //this.picture = results[0].picture.large
         }, 
     },
 
