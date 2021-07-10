@@ -4,12 +4,12 @@ const app = Vue.createApp({
 
     data(){ //data is a function/method that returns an object
         return {
-            firstName: 'Lewis',
-            lastName: 'Hamilton',
-            team: 'Mercedes AMG Petronas',
-            number: '44',
+            firstName: 'Shaquille',
+            lastName: 'David',
+            team: 'Univeristy of Toronto Mississauga Eagles',
+            number: '15',
             gender: 'male',
-            picture: 'https://randomuser.me/api/portraits/men/10.jpg',
+            picture: 'assets/me.jpg',
             year: '2021',
         }
     },
@@ -81,12 +81,16 @@ const app = Vue.createApp({
             
             //pick a random driver on click
             driver = this.pickRandomDriver(f1);
-            
+            id = driver.driverId;
+            console.log(id)
+
             //update the driver
             this.firstName = driver.givenName;
             this.lastName = driver.familyName;
             this.number = driver.permanentNumber;
             this.team = this.getDriverTeam(driver);
+            this.picture = 'assets/{0}.jpg'.format(driver.driverId);
+
             //this.gender = results[0].gender,
             //this.picture = results[0].picture.large
         }, 
